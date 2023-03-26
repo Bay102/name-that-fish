@@ -19,7 +19,6 @@ function App() {
   const [incorrectCount, setIncorrectCount] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [correctFish, setCorrectFish] = useState(fish[0]?.name);
-  
 
   const matchFish = (e) => {
     e.preventDefault();
