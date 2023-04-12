@@ -5,19 +5,33 @@ import "./styles/game-board.css";
 
 //> need an onSubmit function 
 
-export const GameBoard = ({ fish, setUserEntry, matchFish}) => {
+export const GameBoard = ({ fish, userEntry ,setUserEntry, matchFish}) => {
 
-  const nextFishToName = fish.length ? fish[0] : undefined;
+ const nextFishToName = fish[0];
+
+  const fishInput = ({ target: { value } }) => {
+    setUserEntry(value);
+  };
 
   return (
     <div id="game-board">
       <div id="fish-container">
-        <img src={fish.length ? nextFishToName.url : null} alt={fish.length ? nextFishToName.name : null} />
+        <img src={nextFishToName.url} alt={nextFishToName.name} />
       </div>
-      <form id="fish-guess-form" >
+      <form
+        id="fish-guess-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <label htmlFor="fish-guess">What kind of fish is this?</label>
-        <input onChange={(e) => setUserEntry(e.target.value.toLowerCase())} type="text" name="fish-guess" />
-        <button onClick={matchFish}>Enter</button>
+        <input
+          type="text"
+          name="fish-guess"
+          value={userEntry}
+          onChange={fishInput}
+        />
+        <input type="submit" onClick={matchFish} />
       </form>
     </div>
   );

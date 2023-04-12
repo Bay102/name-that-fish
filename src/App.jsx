@@ -17,37 +17,67 @@ function App() {
   const [userEntry, setUserEntry] = useState('');
   const [fish, setFish] = useState(initialFish);
   const [incorrectCount, setIncorrectCount] = useState(0);
-  const [correctCount, setCorrectCount] = useState(0);
-  const [correctFish, setCorrectFish] = useState(fish[0]?.name);
+  const [correct, setCorrect] = useState(0);
+  const [correctFish, setCorrectFish] = useState(fish.length ? fish[0]?.name : null);
 
-  const matchFish = (e) => {
-    e.preventDefault();
-    const filter = fish.filter((f) => f.name !== userEntry);
-    setFish(filter);
+  // const matchFish = (e) => {
+  //   e.preventDefault();
+  //   const filter = fish.filter((f) => f.name !== userEntry);
+  //   setFish(filter);
+  //   if (correctFish === userEntry) {
+  //     setCorrectCount(correctCount + 1);
+  //   } else {
+  //     setIncorrectCount(incorrectCount + 1);
+  //   }
+  //   setCorrectFish(filter[0]?.name);
+  //   setUserEntry('');
+  // };
+
+  const matchFish = () => {
     if (correctFish === userEntry) {
-      setCorrectCount(correctCount + 1);
+      const filter = fish.filter((fish) => fish.name !== userEntry);
+      setFish(filter);
+      setCorrect(correct + 1);
+      setCorrectFish(filter.length ? filter[0].name : null);
+      setUserEntry('');
     } else {
+      const filter = fish.filter((fish) => fish.name !== correctFish);
+      setFish(filter);
       setIncorrectCount(incorrectCount + 1);
+      setCorrectFish(filter.length ? filter[0].name : null);
+      setUserEntry('');
     }
-    setCorrectFish(filter[0]?.name);
-    setUserEntry('');
   };
 
   return (
     <div className="App">
       <header>
-        <ScoreBoard
+        {/* <ScoreBoard
           incorrectCount={incorrectCount}
-          correctCount={correctCount}
+          correct={correct}
           fish={fish}
         />
-        {!fish.length && <FinalScore correctCount={correctCount} />}
+        {!fish.length && <FinalScore correct={correct} />}
         <GameBoard
           fish={fish}
           setUserEntry={setUserEntry}
           matchFish={matchFish}
           userEntry={userEntry}
-        />
+        /> */}
+
+        {fish.length ? (
+          <div>
+            <ScoreBoard correct={correct} incorrectCount={incorrectCount} fish={fish} />
+            <GameBoard
+               setUserEntry={setUserEntry}
+               matchFish={matchFish}
+              fish={fish}
+              userEntry={userEntry}
+            />
+          </div>
+        ) : (
+          <FinalScore correct={correct} total={initialFish.length} />
+        )}
       </header>
     </div>
   );

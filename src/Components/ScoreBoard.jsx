@@ -1,7 +1,7 @@
 import "./styles/score-board.css";
 //  Where the score is presented
 
-export const ScoreBoard = ({fish, correctCount, incorrectCount}) => {
+export const ScoreBoard = ({fish, correct, incorrectCount}) => {
   return (
     <div id="score-board">
       <div>Incorrect 🔻: {incorrectCount}</div>
@@ -12,7 +12,7 @@ export const ScoreBoard = ({fish, correctCount, incorrectCount}) => {
           </div>
         ))}
       </div>
-      <div>Correct ✅: {correctCount}</div>
+      <div>Correct ✅: {correct}</div>
     </div>
   );
 };
